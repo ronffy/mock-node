@@ -2,6 +2,10 @@
 
 var http = require('http');
 var mock = require('./mock');
+const { arr2obj } = require('./_utils');
+
+let args = process.argv.slice(2);
+args = arr2obj(args);
 
 http.createServer(function (request, response) {
   // const { headers, method, url } = request;
@@ -41,4 +45,4 @@ http.createServer(function (request, response) {
   response.writeHead(200, config);
   response.end(JSON.stringify(mockData));
 
-}).listen(8124);
+}).listen(args.port || '8818');
