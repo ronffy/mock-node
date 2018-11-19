@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var http = require('http');
-var mockData = require('./mock');
+var mock = require('./mock');
 
 http.createServer(function (request, response) {
   // const { headers, method, url } = request;
@@ -13,24 +13,32 @@ http.createServer(function (request, response) {
   
   response.setHeader("Access-Control-Allow-Origin", "*");
 
-  if (mockData[url]) {
-    const mock = mockData[url];
-    if (typeof mock === 'function') {
-      new Promise(mock)
+  const mockData = mock[url];
+
+  if (!mockData) {
+    response.writeHead(404);
+    response.end(null);
+    return;
+  }
+
+  const config = {
+    'Content-Type': 'text/json'
+  }
+
+  if (typeof mockData === 'function') {
+    new Promise(mockData)
       .then(data => {
-        response.writeHead(200, { 'Content-Type': 'text/json' });
+        response.writeHead(200, config);
         response.end(JSON.stringify(data));
       })
       .catch(e => {
         response.writeHead(500);
         response.end(e);
       })
-      return;
-    }
-    response.writeHead(200, { 'Content-Type': 'text/json' });
-    response.end(JSON.stringify(mock));
-  } else {
-    response.writeHead(404);
-    response.end(null);
+    return;
   }
+
+  response.writeHead(200, config);
+  response.end(JSON.stringify(mockData));
+
 }).listen(8124);
