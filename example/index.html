@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let origin = 'http://localhost:8124';
+    let api = {
+      data1: `${origin}/api/data1`,
+      data2: `${origin}/api/data2`,
+      data3: `${origin}/api/data3`,
+    };
+
+    function xhrRequest(api) {
+
+      let xhr = new XMLHttpRequest();
+      xhr.open("get", api, true);
+
+      xhr.onload = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status == 200) {
+            const data = JSON.parse(xhr.responseText);
+            console.log('xhr', data);
+
+          }
+        }
+      };
+
+      xhr.onerror = function () {
+        console.log("Oops, error");
+      };
+
+      //设置xhr请求的超时时间
+      xhr.timeout = 3000;
+      xhr.ontimeout = function () {
+        console.log('The request timed out.');
+      }
+
+      xhr.send();
+    }
+
+    xhrRequest(api.data1);
+
+
+
+
+    fetch(api.data2)
+      .then(res => res.json())
+      .then(data => {
+        console.log('fetch1', data);
+      })
+      .catch(e => {
+        console.log('error:', e);
+      });
+
+
+    async function fetchRequest(url) {
+      try {
+        let response = await fetch(url);
+        let data = await response.json();
+        console.log('fetch2', data);
+      } catch (e) {
+        console.log("Oops, error", e);
+      }
+    }
+
+    fetchRequest(api.data3);
+
+
+  </script>
+</body>
+
+</html>
