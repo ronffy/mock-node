@@ -1,11 +1,19 @@
 {
-  "name": "mock-node",
-  "version": "1.0.1",
+  "name": "mocks-node",
+  "version": "1.0.0",
   "description": "mock",
   "main": "index.js",
+  "bin": {
+    "mocks-node": "index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ronffy",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ronffy/mocks-node.git"
+  }
 }
