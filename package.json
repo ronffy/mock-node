@@ -1,11 +1,11 @@
 {
-  "name": "api-001",
-  "version": "1.0.0",
-  "description": "",
+  "name": "mock-node",
+  "version": "1.0.1",
+  "description": "mock",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "ronffy",
   "license": "ISC"
 }
