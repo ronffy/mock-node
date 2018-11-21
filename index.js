@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 var http = require('http');
-var mock = require('./mock');
+var defaultMock = require('./.defaultMock');
+var mock = require(__dirname + '/.mock');
 const { arr2obj } = require('./_utils');
 
 let args = process.argv.slice(2);
@@ -17,7 +18,7 @@ http.createServer(function (request, response) {
   
   response.setHeader("Access-Control-Allow-Origin", "*");
 
-  const mockData = mock[url];
+  const mockData = (mock || defaultMock)[url];
 
   if (!mockData) {
     response.writeHead(404);
